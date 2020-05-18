@@ -7,6 +7,9 @@ Give parameters for accelerated molecular dynamics (https://www.ks.uiuc.edu/Rese
 
 The input parameters Edihed, adihed, Etotal, atotal is calculated from  10 ns cMD simulation.
 
+- Usage:
+python aMD_parameters.py [NAMDLogFile] [PDBFile]
+
 - Example output:
 
 Only dihedral:
