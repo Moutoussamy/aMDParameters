@@ -11,7 +11,7 @@ __copyright__ = "copyleft"
 __date__ = "2020/05"
 
 import sys
-import os
+import pandas as pd
 import numpy as np
 
 
@@ -35,6 +35,9 @@ def GetNRJ(NamdLogFile):
                 else:
                     tmp = [int(line[1]),float(line[11]),float(line[4])] #[step,total,dihe]
                     matrix = np.vstack((matrix,tmp))
+
+    names = ["step","Total","Dihedral"]
+    matrix = pd.DataFrame(matrix,columns = names)
 
     return matrix
 
