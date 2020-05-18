@@ -41,7 +41,26 @@ def GetNRJ(NamdLogFile):
 
     return matrix
 
+def GetFinalStep(desire_time,timestep):
+    """
+    Get the step corresponding to the desire time
+    e.g 5000000 if the desire time is 10ns and the timestep is 2fs
+
+    :param desire_time: mk the average during this time
+    :param timestep: the NAMD timestep
+    :return: the step corresponding to the desire time
+    """
+    desire_time = desire_time*1000000
+    final_step = desire_time/timestep
+
+    return final_step
+
+
+def CalculateParam(NrjMtx,timestep,desire_time):
+    final_step = GetFinalStep(desire_time,timestep)
+    print(final_step)
 
 
 if __name__ == '__main__':
-    GetNRJ(sys.argv[1]) # collect energies from NAMD log file
+    NrjMtx = GetNRJ(sys.argv[1]) # collect energies from NAMD log file
+    CalculateParam(NrjMtx,2,10)
