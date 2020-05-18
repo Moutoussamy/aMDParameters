@@ -56,6 +56,24 @@ def GetFinalStep(desire_time,timestep):
     return final_step
 
 
+def GetSystemInfo(pdb):
+    """
+    Get nb of atoms and nb of residues
+    :param pdb: a pdb file
+    :return: nb of atoms and nb of residues
+    """
+    residues = []
+    nbatoms = 0
+
+    with open(pdb) as inputfile:
+        for line in inputfile:
+            if line[0:4] == "ATOM":
+                nbatoms += 1
+                if line[22:26] not in residues:
+                    residues.append(line[22:26])
+
+    return nbatoms,len(residues)
+
 def CalculateParam(NrjMtx,timestep,desire_time):
     """
     Get avg. dhedral and total energy
@@ -67,8 +85,11 @@ def CalculateParam(NrjMtx,timestep,desire_time):
     final_step = GetFinalStep(desire_time,timestep)
     SelectedValues = NrjMtx.loc[NrjMtx['step'] <= final_step]
 
-    return np.mean(SelectedValues["Total"], np.mean(SelectedValues["Dihedral"] #AVG TOTAl, AVG DIHE
+    return np.mean(SelectedValues["Total"]), np.mean(SelectedValues["Dihedral"]) #AVG TOTAl, AVG DIHE
 
 if __name__ == '__main__':
+
     NrjMtx = GetNRJ(sys.argv[1]) # collect energies from NAMD log file
     CalculateParam(NrjMtx,2,10)
+    GetSystemInfo(sys.argv[2])
+
