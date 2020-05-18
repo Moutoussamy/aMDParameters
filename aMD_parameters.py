@@ -112,13 +112,37 @@ def TotalParam(avgTotal,nbatoms):
 
     return ETotal,alphaTotal
 
+def PrintCommandLine(avgTotal,avgDihedral,pdb):
+    nbatoms, nbres = GetSystemInfo(pdb)
+    Etotal, alphaTotal = TotalParam(avgTotal, nbatoms)
+    EDihedral, alphaDihedral = DihedralParam(avgDihedral, nbres)
 
+
+    print("\nOnly dihedral:\n")
+    print"""
+    accelMD on
+    accelMDdihe on
+    accelMDE %f
+    accelMDalpha %f
+    """%(EDihedral,alphaDihedral)
+
+
+    print("\nDual Boost:\n")
+    print"""
+    accelMD on
+    accelMDdihe on
+    accelMDE %f
+    accelMDalpha %f
+    accelMDdual on
+    accelMDTE %f
+    accelMDTalpha %f
+    """%(EDihedral,alphaDihedral,Etotal,alphaTotal)
 
 
 
 if __name__ == '__main__':
 
     NrjMtx = GetNRJ(sys.argv[1]) # collect energies from NAMD log file
-    CalculateParam(NrjMtx,2,10)
-    GetSystemInfo(sys.argv[2])
+    avgTotal, avgDihedral = CalculateParam(NrjMtx,2,10)
+    PrintCommandLine(avgTotal, avgDihedral,sys.argv[2])
 
