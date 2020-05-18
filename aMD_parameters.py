@@ -57,9 +57,17 @@ def GetFinalStep(desire_time,timestep):
 
 
 def CalculateParam(NrjMtx,timestep,desire_time):
+    """
+    Get avg. dhedral and total energy
+    :param NrjMtx: energies matrix
+    :param timestep: NAMD timestep
+    :param desire_time: mk the average during this time
+    :return: avg. dhedral and total energy
+    """
     final_step = GetFinalStep(desire_time,timestep)
-    print(final_step)
+    SelectedValues = NrjMtx.loc[NrjMtx['step'] <= final_step]
 
+    return np.mean(SelectedValues["Total"], np.mean(SelectedValues["Dihedral"] #AVG TOTAl, AVG DIHE
 
 if __name__ == '__main__':
     NrjMtx = GetNRJ(sys.argv[1]) # collect energies from NAMD log file
