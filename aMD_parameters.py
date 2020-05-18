@@ -80,12 +80,29 @@ def CalculateParam(NrjMtx,timestep,desire_time):
     :param NrjMtx: energies matrix
     :param timestep: NAMD timestep
     :param desire_time: mk the average during this time
-    :return: avg. dhedral and total energy
+    :return: avg. dhedral and total energies
     """
     final_step = GetFinalStep(desire_time,timestep)
     SelectedValues = NrjMtx.loc[NrjMtx['step'] <= final_step]
 
     return np.mean(SelectedValues["Total"]), np.mean(SelectedValues["Dihedral"]) #AVG TOTAl, AVG DIHE
+
+def DihedralParam(avgDihe,nbRes):
+    """
+    Calculate E and alpha
+    :param avgDihe: avg. dhedral energy
+    :param nbRes: number of residues
+    :return: E and alpha
+    """
+
+    EDihedral = avgDihe + 3.5*nbRes
+    alphaDihedral = (3.5*nbRes)/5
+
+    return EDihedral,alphaDihedral
+
+
+
+
 
 if __name__ == '__main__':
 
