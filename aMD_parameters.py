@@ -113,6 +113,13 @@ def TotalParam(avgTotal,nbatoms):
     return ETotal,alphaTotal
 
 def PrintCommandLine(avgTotal,avgDihedral,pdb):
+    """
+    Print param. for boost
+    :param avgTotal: avg. total energy
+    :param avgDihedral: avg. dihe. energy
+    :param pdb: pdb file
+    :return: Print param. for boost
+    """
     nbatoms, nbres = GetSystemInfo(pdb)
     Etotal, alphaTotal = TotalParam(avgTotal, nbatoms)
     EDihedral, alphaDihedral = DihedralParam(avgDihedral, nbres)
