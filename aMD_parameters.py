@@ -100,6 +100,18 @@ def DihedralParam(avgDihe,nbRes):
 
     return EDihedral,alphaDihedral
 
+def TotalParam(avgTotal,nbatoms):
+    """
+    Calculate E and alpha for total energies
+    :param avgTotal: avg. total energy
+    :param nbatoms: number of atoms
+    :return: E and alpha
+    """
+    ETotal = avgTotal + 0.175*nbatoms
+    alphaTotal = 0.175*nbatoms
+
+    return ETotal,alphaTotal
+
 
 
 
