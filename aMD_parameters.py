@@ -95,7 +95,7 @@ def DihedralParam(avgDihe,nbRes):
     :return: E and alpha
     """
 
-    EDihedral = avgDihe + 3.5*nbRes
+    EDihedral = avgDihe + (3.5*nbRes)
     alphaDihedral = (3.5*nbRes)/5
 
     return EDihedral,alphaDihedral
@@ -107,7 +107,7 @@ def TotalParam(avgTotal,nbatoms):
     :param nbatoms: number of atoms
     :return: E and alpha
     """
-    ETotal = avgTotal + 0.175*nbatoms
+    ETotal = avgTotal + (0.175*nbatoms)
     alphaTotal = 0.175*nbatoms
 
     return ETotal,alphaTotal
@@ -131,6 +131,7 @@ def PrintCommandLine(avgTotal,avgDihedral,pdb):
     accelMDdihe on
     accelMDE %f
     accelMDalpha %f
+    accelMDOutFreq 5000
     """%(EDihedral,alphaDihedral)
 
 
@@ -143,6 +144,7 @@ def PrintCommandLine(avgTotal,avgDihedral,pdb):
     accelMDdual on
     accelMDTE %f
     accelMDTalpha %f
+    accelMDOutFreq 5000
     """%(EDihedral,alphaDihedral,Etotal,alphaTotal)
 
 
