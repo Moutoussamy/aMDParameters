@@ -2,8 +2,8 @@
 Give parameters for accelerated molecular dynamics (https://www.ks.uiuc.edu/Research/namd/2.9/ug/node63.html)
 
 - Inputs:
-- a PDB file of your system (only the protein, no water)
-- a log file from a classical 
+    - a PDB file of your system (only the protein, no water)
+    - a log file from a classical 
 
 The input parameters Edihed, adihed, Etotal, atotal is calculated from  10 ns cMD simulation.
 
