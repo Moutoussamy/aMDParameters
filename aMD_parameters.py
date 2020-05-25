@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Propose parmaters for accelerated molecular dynamics based of a classical molecular dynamics
+Propose parameters for accelerated molecular dynamics based of a classical molecular dynamics
 """
 
 __author__ = "Emmanuel Edouard MOUTOUSSAMY"
@@ -10,11 +10,25 @@ __version__  = "1.0.0"
 __copyright__ = "copyleft"
 __date__ = "2020/05"
 
-import sys
 import pandas as pd
 import numpy as np
+import argparse
 
+def GetArgs():
+    """
+    Get argument for the calculation using flags
+    :return: argument: log file and pdb
+    """
 
+    parser = argparse.ArgumentParser(description='Propose parameters for accelerated molecular dynamics based of a \
+    classical MD')
+
+    parser.add_argument('-log', metavar = "log", type = str, help = "log file from a classical MD")
+    parser.add_argument('-pdb', metavar="pdb", type=str, help= "pdb file, no water")
+
+    args = parser.parse_args()
+
+    return args
 
 def GetNRJ(NamdLogFile):
     """
@@ -150,8 +164,8 @@ def PrintCommandLine(avgTotal,avgDihedral,pdb):
 
 
 if __name__ == '__main__':
-
-    NrjMtx = GetNRJ(sys.argv[1]) # collect energies from NAMD log file
+    args = GetArgs()
+    NrjMtx = GetNRJ(args.log) # collect energies from NAMD log file
     avgTotal, avgDihedral = CalculateParam(NrjMtx,2,10)
-    PrintCommandLine(avgTotal, avgDihedral,sys.argv[2])
+    PrintCommandLine(avgTotal, avgDihedral,args.pdb)
 
