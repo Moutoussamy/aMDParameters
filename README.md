@@ -1,9 +1,11 @@
 # aMDParameters
-Give parameters for accelerated molecular dynamics (https://www.ks.uiuc.edu/Research/namd/2.9/ug/node63.html)
+Give parameters for accelerated molecular dynamics (https://www.ks.uiuc.edu/Research/namd/2.9/ug/node63.html).
+Calculate the parameters for accelerated molecular dynamics based on a classical MD simulation (cMD).
+
 
 - Inputs:
     - a PDB file of your system (only the protein, no water)
-    - a log file from a classical 
+    - a log file from a classical MD
 
 The input parameters Edihed, adihed, Etotal, atotal is calculated from  10 ns cMD simulation.
 
