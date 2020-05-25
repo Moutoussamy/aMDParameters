@@ -9,10 +9,10 @@ The input parameters Edihed, adihed, Etotal, atotal is calculated from  10 ns cM
 
 - Usage:
 python aMD_parameters.py -log [NAMDLogFile] -pdb [PDBFile]
-    arguments:
-    -h, --help  show this help message and exit
-    -log log    pdb file
-    -pdb pdb    pdb file, no water
+arguments:
+-h, --help  show this help message and exit
+-log log    pdb file
+-pdb pdb    pdb file, no water
 
 - Example output:
 
