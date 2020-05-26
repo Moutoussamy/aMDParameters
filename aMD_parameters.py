@@ -25,7 +25,7 @@ def GetArgs():
 
     parser.add_argument('-log', metavar = "log", type = str, help = "log file from a classical MD")
     parser.add_argument('-pdb', metavar="pdb", type=str, help= "pdb file, no water")
-    parser.add_argument('-first', metavar="first", type=int, help="step where to start the average")
+    parser.add_argument('-first', metavar="first",default=0, type=int, help="step where to start the average")
 
     args = parser.parse_args()
 
