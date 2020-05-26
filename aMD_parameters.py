@@ -25,6 +25,7 @@ def GetArgs():
 
     parser.add_argument('-log', metavar = "log", type = str, help = "log file from a classical MD")
     parser.add_argument('-pdb', metavar="pdb", type=str, help= "pdb file, no water")
+    parser.add_argument('-first', metavar="first", type=int, help="step where to start the average")
 
     args = parser.parse_args()
 
@@ -55,17 +56,18 @@ def GetNRJ(NamdLogFile):
 
     return matrix
 
-def GetFinalStep(desire_time,timestep):
+def GetFinalStep(desire_time,timestep, first_step):
     """
     Get the step corresponding to the desire time
     e.g 5000000 if the desire time is 10ns and the timestep is 2fs
 
     :param desire_time: mk the average during this time
     :param timestep: the NAMD timestep
+    :param first_step: desire first step
     :return: the step corresponding to the desire time
     """
     desire_time = desire_time*1000000
-    final_step = desire_time/timestep
+    final_step = desire_time/timestep + first_step
 
     return final_step
 
@@ -88,7 +90,7 @@ def GetSystemInfo(pdb):
 
     return nbatoms,len(residues)
 
-def CalculateParam(NrjMtx,timestep,desire_time):
+def CalculateParam(NrjMtx,timestep,desire_time, first_step):
     """
     Get avg. dhedral and total energy
     :param NrjMtx: energies matrix
@@ -96,8 +98,12 @@ def CalculateParam(NrjMtx,timestep,desire_time):
     :param desire_time: mk the average during this time
     :return: avg. dhedral and total energies
     """
-    final_step = GetFinalStep(desire_time,timestep)
-    SelectedValues = NrjMtx.loc[NrjMtx['step'] <= final_step]
+    final_step = GetFinalStep(desire_time,timestep,first_step)
+    print(first_step,final_step)
+
+    SelectedValues = NrjMtx.loc[first_step <= NrjMtx['step']]
+    SelectedValues = SelectedValues.loc[SelectedValues['step'] <= final_step]
+    print(SelectedValues["step"])
 
     return np.mean(SelectedValues["Total"]), np.mean(SelectedValues["Dihedral"]) #AVG TOTAl, AVG DIHE
 
@@ -108,7 +114,6 @@ def DihedralParam(avgDihe,nbRes):
     :param nbRes: number of residues
     :return: E and alpha
     """
-
     EDihedral = avgDihe + (3.5*nbRes)
     alphaDihedral = (3.5*nbRes)/5
 
@@ -166,6 +171,6 @@ def PrintCommandLine(avgTotal,avgDihedral,pdb):
 if __name__ == '__main__':
     args = GetArgs()
     NrjMtx = GetNRJ(args.log) # collect energies from NAMD log file
-    avgTotal, avgDihedral = CalculateParam(NrjMtx,2,10)
+    avgTotal, avgDihedral = CalculateParam(NrjMtx,2,10,args.first)
     PrintCommandLine(avgTotal, avgDihedral,args.pdb)
 
