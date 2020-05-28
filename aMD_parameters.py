@@ -13,6 +13,7 @@ __date__ = "2020/05"
 import pandas as pd
 import numpy as np
 import argparse
+import sys
 
 def GetArgs():
     """
@@ -30,6 +31,28 @@ def GetArgs():
     args = parser.parse_args()
 
     return args
+
+
+def CheckPDBExtension(pdb):
+    """
+    Check extension of PDB file
+    :param pdb: the argement given with the -pdb flag
+    :return: 0 if the extension is nit '.pdb'
+    """
+    if pdb[-4:] == ".pdb":
+        return 1
+    else:
+        return 0
+
+def CheckArguments(arguments):
+    """
+    Check if the correct argument has been given
+    :param arguments: list of argument given
+    :return: error message if something wrong (FILE extension or incorrect data)
+    """
+    if not CheckPDBExtension(arguments.pdb):
+        sys.exit('argument for -pdb is not a PDB file')
+
 
 def GetNRJ(NamdLogFile):
     """
@@ -99,11 +122,9 @@ def CalculateParam(NrjMtx,timestep,desire_time, first_step):
     :return: avg. dhedral and total energies
     """
     final_step = GetFinalStep(desire_time,timestep,first_step)
-    print(first_step,final_step)
 
     SelectedValues = NrjMtx.loc[first_step <= NrjMtx['step']]
     SelectedValues = SelectedValues.loc[SelectedValues['step'] <= final_step]
-    print(SelectedValues["step"])
 
     return np.mean(SelectedValues["Total"]), np.mean(SelectedValues["Dihedral"]) #AVG TOTAl, AVG DIHE
 
@@ -170,6 +191,7 @@ def PrintCommandLine(avgTotal,avgDihedral,pdb):
 
 if __name__ == '__main__':
     args = GetArgs()
+    CheckArguments(args)
     NrjMtx = GetNRJ(args.log) # collect energies from NAMD log file
     avgTotal, avgDihedral = CalculateParam(NrjMtx,2,10,args.first)
     PrintCommandLine(avgTotal, avgDihedral,args.pdb)
