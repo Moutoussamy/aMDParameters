@@ -44,6 +44,20 @@ def CheckPDBExtension(pdb):
     else:
         return 0
 
+def CheckPDBAtom(pdb):
+    """
+    Check if the PDB file contains ATOM line
+    :param pdb: a pdb file
+    :return: 0 if no atom in pdb file else return 1
+    """
+    flag = 0
+    with open(pdb) as input_file:
+        for line in input_file:
+            if line[0:4] == "ATOM":
+                flag = 1
+    return flag
+
+
 def CheckArguments(arguments):
     """
     Check if the correct argument has been given
@@ -51,7 +65,9 @@ def CheckArguments(arguments):
     :return: error message if something wrong (FILE extension or incorrect data)
     """
     if not CheckPDBExtension(arguments.pdb):
-        sys.exit('argument for -pdb is not a PDB file')
+        sys.exit('ERROR: argument for -pdb is not a PDB file')
+    if not CheckPDBAtom(arguments.pdb):
+        sys.exit('ERROR: no atom in the PDB file')
 
 
 def GetNRJ(NamdLogFile):
