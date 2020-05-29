@@ -4,6 +4,7 @@
 """
 Propose parameters for accelerated molecular dynamics based of a classical molecular dynamics
 aMD documentation: https://www.ks.uiuc.edu/Research/namd/2.9/ug/node63.html
+A NAMD log file of cMD and a pdb is necessary.
 """
 
 __author__ = "Emmanuel Edouard MOUTOUSSAMY"
