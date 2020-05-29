@@ -3,6 +3,7 @@
 
 """
 Propose parameters for accelerated molecular dynamics based of a classical molecular dynamics
+aMD documentation: https://www.ks.uiuc.edu/Research/namd/2.9/ug/node63.html
 """
 
 __author__ = "Emmanuel Edouard MOUTOUSSAMY"
@@ -206,9 +207,9 @@ def PrintCommandLine(avgTotal,avgDihedral,pdb):
 
 
 if __name__ == '__main__':
-    args = GetArgs()
-    CheckArguments(args)
+    args = GetArgs() #collect arguments
+    CheckArguments(args) # Check arguments
     NrjMtx = GetNRJ(args.log) # collect energies from NAMD log file
-    avgTotal, avgDihedral = CalculateParam(NrjMtx,2,10,args.first)
-    PrintCommandLine(avgTotal, avgDihedral,args.pdb)
+    avgTotal, avgDihedral = CalculateParam(NrjMtx,2,10,args.first) # Caculate the parameters for aMD
+    PrintCommandLine(avgTotal, avgDihedral,args.pdb) # Print the command lines for NAMD
 
