@@ -3,6 +3,7 @@
 
 """
 Propose parameters for accelerated molecular dynamics based of a classical molecular dynamics
+A NAMD log file of cMD and a pdb is necessary.
 """
 
 __author__ = "Emmanuel Edouard MOUTOUSSAMY"
