@@ -38,8 +38,8 @@ def GetArgs():
 def CheckPDBExtension(pdb):
     """
     Check extension of PDB file
-    :param pdb: the argement given with the -pdb flag
-    :return: 0 if the extension is nit '.pdb'
+    :param pdb: the argument given with the -pdb flag
+    :return: 0 if the extension is not '.pdb'
     """
     if pdb[-4:] == ".pdb":
         return 1
@@ -60,6 +60,18 @@ def CheckPDBAtom(pdb):
     return flag
 
 
+def CheckLOGExtesnion(log):
+    """
+    Check extension of the log file
+    :param pdb: the argument given with the -log flag
+    :return: 0 if the extension is not '.log'
+    """
+    if log[-4:] == ".log":
+        return 1
+    else:
+        return 0
+
+
 def CheckArguments(arguments):
     """
     Check if the correct argument has been given
@@ -70,7 +82,8 @@ def CheckArguments(arguments):
         sys.exit('ERROR: argument for -pdb is not a PDB file')
     if not CheckPDBAtom(arguments.pdb):
         sys.exit('ERROR: no atom in the PDB file')
-
+    if not CheckLOGExtesnion(arguments.log):
+        sys.exit('ERROR: argument for -log is not a LOG file')
 
 def GetNRJ(NamdLogFile):
     """
