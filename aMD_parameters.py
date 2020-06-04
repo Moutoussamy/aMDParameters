@@ -63,13 +63,27 @@ def CheckPDBAtom(pdb):
 def CheckLOGExtesnion(log):
     """
     Check extension of the log file
-    :param pdb: the argument given with the -log flag
+    :param log: the argument given with the -log flag
     :return: 0 if the extension is not '.log'
     """
     if log[-4:] == ".log":
         return 1
     else:
         return 0
+
+def CheckLOGEnergy(log):
+    """
+    Check extension of the log file
+    :param log: the argument given with the -log flag
+    :return: 0 if the log does not contain energies
+    """
+    flag = 0
+    with open(log) as input_file:
+        for line in input_file:
+            if line[0:7] == "ENERGY:":
+                flag = 1
+    return flag
+
 
 
 def CheckArguments(arguments):
@@ -84,6 +98,8 @@ def CheckArguments(arguments):
         sys.exit('ERROR: no atom in the PDB file')
     if not CheckLOGExtesnion(arguments.log):
         sys.exit('ERROR: argument for -log is not a LOG file')
+    if not CheckLOGEnergy(arguments.log):
+        sys.exit('ERROR: no energies in the LOG file')
 
 def GetNRJ(NamdLogFile):
     """
